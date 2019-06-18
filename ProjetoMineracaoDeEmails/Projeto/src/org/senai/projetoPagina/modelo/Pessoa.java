@@ -1,13 +1,33 @@
 package org.senai.projetoPagina.modelo;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class Pessoa {
+	private int cod;
+	
+
 	private String nome;
 	private String email;
 	private String silhouette;
 	private String promocao;
 	private String arqGratuito;
 	private String achou;
+	private String cursoPago;
 	
+	public int getCod() {
+		return cod;
+	}
+	public void setCod(int cod) {
+		this.cod = cod;
+	}
+	public String getCursoPago() {
+		return cursoPago;
+	}
+	public void setCursoPago(String cursoPago) {
+		this.cursoPago = cursoPago;
+	}
 	public String getPromocao() {
 		return promocao;
 	}
@@ -44,6 +64,38 @@ public class Pessoa {
 	public void setArqGratuito(String arqGratuito) {
 		this.arqGratuito = arqGratuito;
 	}
+	
+	// método inserir
+		public boolean inserir() {
+			Connection conexao = new ConectarJDBC().getConectar();
+			if (conexao != null) {
+				String sql = "insert into emails(" + "nome_completo  ," + "email         ," + "achou          ,"
+						+ "silhouette   ," + "promocao    ," + "arq_gratuito    ," + "arq_pago " + ") "
+						+ "values (?," + "?," + "?," + "?," + "?," + "?," + "?" + ")";
+				try {
+					PreparedStatement prepararSQL = conexao.prepareStatement(sql);
+
+					prepararSQL.setString(1, nome);
+					prepararSQL.setString(2, email);
+					prepararSQL.setString(3, achou);
+					prepararSQL.setString(4, silhouette);
+					prepararSQL.setString(5, promocao);
+					prepararSQL.setString(6, arqGratuito);
+					prepararSQL.setString(7, cursoPago);
+
+					prepararSQL.execute();
+					prepararSQL.close();
+					return true;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				}
+			}
+			return false;
+
+		}
+
 	
 
 }

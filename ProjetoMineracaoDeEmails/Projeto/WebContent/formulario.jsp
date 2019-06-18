@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <html lang="pt-br">
 <head>
@@ -13,9 +15,9 @@
 <!-- Mecanismos de busca -->
 <meta name="robots" content="index, follow">
 <meta name="keywords"
-	content="HTML, HTML 5, CSS, CSS3, script, javaScript, js, jQuery, Bootstrap, twitter, responsivo, Design, mobile, first, grid, framework, SENAI, programaÃ§Ã£o, programador, desenvolvimento, desenvolvedor, web, java, popper.js, menu, Carousel, Cards">
+	content="HTML, HTML 5, CSS, CSS3, script, javaScript, js, jQuery, Bootstrap, twitter, responsivo, Design, mobile, first, grid, framework, SENAI, programaÃƒÂ§ÃƒÂ£o, programador, desenvolvimento, desenvolvedor, web, java, popper.js, menu, Carousel, Cards">
 <meta name="description"
-	content="PÃ¡gina feita com o framework Bootstrap 4.0.">
+	content="PÃƒÂ¡gina feita com o framework Bootstrap 4.0.">
 
 <!-- Compatiblilidade com IE/Edge -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,7 +42,7 @@
 
 <!-- CSS Interno -->
 <style></style>
-<!-- TÃ­tulo da pÃ¡gina -->
+<!-- TÃƒÂ­tulo da pÃƒÂ¡gina -->
 <title>Detalhe Personalizados</title>
 </head>
 <body>
@@ -62,43 +64,52 @@
 			<label id="labelComoNosAchou">Como nos achou?</label><br> <select
 				class="form-control form-control" id="achou">
 				<option value="Sigo no Instagram">Sigo no Instagram</option>
-				<option value="Indicação de Amigos">Indicação de Amigos</option>
+				<option value="IndicaÃ§Ã£o de Amigos">IndicaÃ§Ã£o de Amigos</option>
 				<option value="Pesquisando na internet">Pesquisando na internet</option>
+				<option value="Outros">Outros</option>
 			</select>
 		</div>
 		<div class="form-row">
 		<div class="form-group col-md-5">
 			<label id="labelTemSilhouette">Tem a Silhouette?</label><br>
-			<td>Sim <input type="radio" id="temSim"> Não <input
-				type="radio" id="nãoTem"></td>
+			 <input type="text" id="silhouette">
 		</div>
 		
 		<div class="form-group col-md-5">
-		<label id="labelArqGratuitos">Deseja receber arquivos gratuitos?</label><br>
-		<td>Sim <input type="radio" id="interesse"> Não <input
-				type="radio" id="nãoInteresse"></td>
+		<label id="labelPromocoes">Gostaria de receber nossas promoÃ§Ãµes?</label><br>
+		<input type="text" id="promocao">
+		
 		</div>
 		</div>
 		
 		<div class="form-row">
 		<div class="form-group col-md-5">
-		<label id="labelPromocoes">Gostaria de receber nossas promoções?</label><br>
-		<td>Sim <input type="radio" id="intPromo"> Não <input
-				type="radio" id="nãoPromo"></td>
+		<label id="labelArqGratuitos">Deseja receber arquivos gratuitos?</label><br>
+		<input type="text" id="arqGratuitos"> 
 		</div>
 		<div>
 		<label id="labelCursosPagos">Se interessa por cursos pagos?</label><br>
-		<td>Sim <input type="radio" id="intCursosPagos"> Não <input
-				type="radio" id="nãoCursosPagos"></td>
+		<input type="text" id="cursosPagos">
 		</div>
 		</div>
+		
+		<tr>
+				<td></td>
+				<td>
+					<button style="background: #DC143C" type="button"
+						class="btn text-white" onclick="novo()">Novo</button>
+					<button style="background: #48D1CC" type="button"
+						class="btn text-white" onclick="gravar()">Gravar</button>
+					
+				</td>
+			</tr>
 		
 
 	</form>
 
 	<!-- JavaScript -->
 
-	<!-- Ordem obrigatÃ³ria: jQuery, Popper.js, Bootstrap.js, Script do desenvolvedor -->
+	<!-- Ordem obrigatÃƒÂ³ria: jQuery, Popper.js, Bootstrap.js, Script do desenvolvedor -->
 
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -118,11 +129,41 @@
 		crossorigin="anonymous"></script>
 
 	<!-- Script do desenvolvedor -->
-	<script>
+	<script type="text/javascript">
 		/* Digite o seu script aqui */
 		
+		function dadosForm() {
+			var dados = "";
+			dados += "nome="+document.getElementById("nome").value;
+			dados += "&email="+document.getElementById("email").value;
+			dados += "&achou="+document.getElementById("achou").value;
+			dados += "&silhouette="+document.getElementById("silhouette").value;
+			dados += "&promocao="+document.getElementById("promocao").value;
+			dados += "&arqGratuitos="+document.getElementById("arqGratuitos").value;
+			dados += "&cursosPagos="+document.getElementById("cursosPagos").value;
+			//dados += "&cod="+document.getElementById("cod").value;
+
+			return dados;
+		}
+
+		function gravar() {
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					// Typical action to be performed when the document is ready:
+					var msg = xhttp.responseText;
+					document.getElementById("msg").innerHTML = msg;
+					if (msg == "Gravado com sucesso") {
+						document.getElementById("msg").className = "alert alert-info";
+					} else {
+						document.getElementById("msg").className = "alert alert-danger";
+					}
+				}
+			};
+			xhttp.open("GET", "serveletEmail?" + dadosForm(), true);
+			xhttp.send();
+		}		
 	</script>
-
 </body>
-
 </html>
