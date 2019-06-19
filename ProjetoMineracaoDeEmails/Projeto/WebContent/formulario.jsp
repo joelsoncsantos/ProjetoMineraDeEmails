@@ -70,26 +70,41 @@
 			</select>
 		</div>
 		<div class="form-row">
-		<div class="form-group col-md-5">
+		<div class="form-group col-md-3">
 			<label id="labelTemSilhouette">Tem a Silhouette?</label><br>
-			 <input type="text" id="silhouette">
+			 <select class="form-control form-control" id="silhouette">
+			 <option value="Sim">Sim</option>
+ 			 <option value="Não">Não</option>
+			 </select>
 		</div>
 		
-		<div class="form-group col-md-5">
+		<div class="form-group col-md-3">
 		<label id="labelPromocoes">Gostaria de receber nossas promoções?</label><br>
-		<input type="text" id="promocao">
+	
+		<select class="form-control form-control" id="promocao">
+			 <option value="Sim">Sim</option>
+ 			 <option value="Não">Não</option>
+			 </select>
 		
 		</div>
 		</div>
 		
 		<div class="form-row">
-		<div class="form-group col-md-5">
+		<div class="form-group col-md-3">
 		<label id="labelArqGratuitos">Deseja receber arquivos gratuitos?</label><br>
-		<input type="text" id="arqGratuitos"> 
+		
+		<select class="form-control form-control" id="arqGratuitos">
+			 <option value="Sim">Sim</option>
+ 			 <option value="Não">Não</option>
+			 </select>
 		</div>
 		<div>
 		<label id="labelCursosPagos">Se interessa por cursos pagos?</label><br>
-		<input type="text" id="cursosPagos">
+		
+		<select class="form-control form-control" id="cursosPagos">
+			 <option value="Sim">Sim</option>
+ 			 <option value="Não">Não</option>
+			 </select>
 		</div>
 		</div>
 		
@@ -163,7 +178,12 @@
 			};
 			xhttp.open("GET", "serveletEmail?" + dadosForm(), true);
 			xhttp.send();
-		}		
+		}	
+		function novo(){
+			window.location.replace('formulario.jsp');	
+			
+			
+		}
 	</script>
 </body>
 </html>
