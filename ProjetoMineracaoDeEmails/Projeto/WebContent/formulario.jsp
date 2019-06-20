@@ -47,78 +47,95 @@
 </head>
 <body>
 
-	<form name="formulario">
-		<div>
+	<form name="formulario" onSubmit="return ( verifica() )"
+		name="frmEnvia">
+		<div class="form-group col-md-6">
 			<label id="labelNome">Nome:</label><br> <input type="text"
 				class="form-control" id="nome" placeholder="Nome Completo"
 				name="nome">
 
 		</div>
-		<div>
-			<label id="labelEmail">Email:</label><br> <input type="text"
-				class="form-control" id="email" placeholder="Insira seu e-mail"
-				name="email">
+		<div class="form-group col-md-6">
+			<label id="labelEmail" from="email">Email:</label><br> <input
+				type="text" class="form-control" id="email"
+				placeholder="Insira seu e-mail" name="email" onblur="checarEmail();">
+				
 		</div>
-		
-		<div >
+		<div class="form-group col-md-3">
+			<div>
+				<label id="labelEmail">Senha:</label><br> <input
+					type="password" class="form-control" id="senha"
+					placeholder="No mínimo 6 digitos" name="senha">
+			</div>
+			<div>
+				<label id="labelEmail">Confirmar senha:</label><br> <input
+					type="password" class="form-control" id="confirmarSenha"
+					placeholder="No mínimo 6 digitos" name="confirmarSenha"
+					onblur="verificarSenha();">
+			</div>
+		</div>
+		<div class="form-group col-md-6">
 			<label id="labelComoNosAchou">Como nos achou?</label><br> <select
 				class="form-control form-control" id="achou">
 				<option value="Sigo no Instagram">Sigo no Instagram</option>
 				<option value="Indicação de Amigos">Indicação de Amigos</option>
-				<option value="Pesquisando na internet">Pesquisando na internet</option>
+				<option value="Pesquisando na internet">Pesquisando na
+					internet</option>
 				<option value="Outros">Outros</option>
 			</select>
 		</div>
 		<div class="form-row">
-		<div class="form-group col-md-3">
-			<label id="labelTemSilhouette">Tem a Silhouette?</label><br>
-			 <select class="form-control form-control" id="silhouette">
-			 <option value="Sim">Sim</option>
- 			 <option value="Não">Não</option>
-			 </select>
+			<div class="form-group col-md-3">
+				<label id="labelTemSilhouette">Tem a Silhouette?</label><br> <select
+					class="form-control form-control" id="silhouette">
+					<option value="Sim">Sim</option>
+					<option value="Não">Não</option>
+				</select>
+			</div>
+
+			<div class="form-group col-md-3">
+				<label id="labelPromocoes">Gostaria de receber nossas
+					promoções?</label><br> <select class="form-control form-control"
+					id="promocao">
+					<option value="Sim">Sim</option>
+					<option value="Não">Não</option>
+				</select>
+
+			</div>
 		</div>
-		
-		<div class="form-group col-md-3">
-		<label id="labelPromocoes">Gostaria de receber nossas promoções?</label><br>
-	
-		<select class="form-control form-control" id="promocao">
-			 <option value="Sim">Sim</option>
- 			 <option value="Não">Não</option>
-			 </select>
-		
-		</div>
-		</div>
-		
+
 		<div class="form-row">
-		<div class="form-group col-md-3">
-		<label id="labelArqGratuitos">Deseja receber arquivos gratuitos?</label><br>
-		
-		<select class="form-control form-control" id="arqGratuitos">
-			 <option value="Sim">Sim</option>
- 			 <option value="Não">Não</option>
-			 </select>
+			<div class="form-group col-md-3">
+				<label id="labelArqGratuitos">Deseja receber arquivos
+					gratuitos?</label><br> <select class="form-control form-control"
+					id="arqGratuitos">
+					<option value="Sim">Sim</option>
+					<option value="Não">Não</option>
+				</select>
+			</div>
+			<div class="form-group col-md-3">
+				<label id="labelCursosPagos">Tem interessa por cursos pagos?</label><br>
+
+				<select class="form-control form-control" id="cursosPagos">
+					<option value="Sim">Sim</option>
+					<option value="Não">Não</option>
+				</select>
+			</div>
 		</div>
-		<div>
-		<label id="labelCursosPagos">Se interessa por cursos pagos?</label><br>
-		
-		<select class="form-control form-control" id="cursosPagos">
-			 <option value="Sim">Sim</option>
- 			 <option value="Não">Não</option>
-			 </select>
-		</div>
-		</div>
-		
+
 		<tr>
-				<td></td>
-				<td>
-					<button style="background: #DC143C" type="button"
-						class="btn text-white" onclick="novo()">Novo</button>
-					<button style="background: #48D1CC" type="button"
-						class="btn text-white" onclick="gravar()">Gravar</button>
+			<td></td>
+			<td>
+				<button style="background: #DC143C" type="button"
+					class="btn text-white" onclick="novo()">Novo</button>
+				<button style="background: #48D1CC" type="button"
+					class="btn text-white" onclick="gravar()"
+					>Gravar</button>
 					
-				</td>
-			</tr>
-		
+
+			</td>
+		</tr>
+
 
 	</form>
 
@@ -146,23 +163,26 @@
 	<!-- Script do desenvolvedor -->
 	<script type="text/javascript">
 		/* Digite o seu script aqui */
-		
+
 		function dadosForm() {
 			var dados = "";
-			dados += "nome="+document.getElementById("nome").value;
-			dados += "&email="+document.getElementById("email").value;
-			dados += "&achou="+document.getElementById("achou").value;
-			dados += "&silhouette="+document.getElementById("silhouette").value;
-			dados += "&promocao="+document.getElementById("promocao").value;
-			dados += "&arqGratuitos="+document.getElementById("arqGratuitos").value;
-			dados += "&cursosPagos="+document.getElementById("cursosPagos").value;
+			dados += "nome=" + document.getElementById("nome").value;
+			dados += "&email=" + document.getElementById("email").value;
+			dados += "&achou=" + document.getElementById("achou").value;
+			dados += "&silhouette="
+					+ document.getElementById("silhouette").value;
+			dados += "&promocao=" + document.getElementById("promocao").value;
+			dados += "&arqGratuitos="
+					+ document.getElementById("arqGratuitos").value;
+			dados += "&cursosPagos="
+					+ document.getElementById("cursosPagos").value;
 			//dados += "&cod="+document.getElementById("cod").value;
 
 			return dados;
 		}
 
 		function gravar() {
-
+			
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
@@ -178,11 +198,66 @@
 			};
 			xhttp.open("GET", "serveletEmail?" + dadosForm(), true);
 			xhttp.send();
-		}	
-		function novo(){
-			window.location.replace('formulario.jsp');	
+		}
+		
+		function novo() {
+			window.location.replace('formulario.jsp');
+
+		}
+
+		function verifica() {
+			if (document.forms[0].email.value.length == 0) {
+				alert('Por favor, informe o seu EMAIL.');
+				document.frmEnvia.email.focus();
+				return false;
+			}
+			return true;
+		}
+
+		function checarEmail() {
+
+			if (document.forms[0].email.value == document
+					.getElementById("email").value
+					|| document.forms[0].email.value.indexOf('@') == -1
+					|| document.forms[0].email.value.indexOf('.') == -1) {
+				//alert("Por favor, informe um E-MAIL válido ou seu está cadastrado");
+				//return false;
+			}
+			
+			var email = document.getElementById("email").value;
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					// Typical action to be performed when the document is ready:
+					var msg = xhttp.responseText;
+					
+									
+				
+				}
+			};
+			xhttp.open("GET", "serveletEmail?checarEmail="+email , true);
+			xhttp.send();
 			
 			
+
+		}
+
+		function validaSenha(input) {
+			if (input.value != document.getElementById("senha").value) {
+				input.setCustomValidity("As senhas não coecidem!");
+			} else {
+				input.setCustomValidity("");
+			}
+		}
+
+		function verificarSenha() {
+
+			if (document.getElementById("senha").value != document
+					.getElementById("confirmarSenha").value) {
+				alert("Senha não confere");
+				return false;
+			}
+
 		}
 	</script>
 </body>

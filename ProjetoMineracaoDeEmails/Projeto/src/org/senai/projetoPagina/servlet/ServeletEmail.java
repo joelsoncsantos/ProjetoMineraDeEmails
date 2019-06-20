@@ -23,10 +23,20 @@ public class ServeletEmail extends HttpServlet{
 	public void service(HttpServletRequest request,
 			HttpServletResponse response) throws ServerException, IOException {
 		//pegar as informações do formulário
-				 
 		Pessoa obj = new Pessoa();
-		obj.setNome(request.getParameter("nome"));
+		boolean sucesso = false;
+		
+		String checarEmail = request.getParameter("checarEmail");
+		if(!checarEmail.equals("")) {
+			sucesso = obj.checarEmail(checarEmail);
+			if(sucesso == true) {
+				System.out.println("Email cadastrado");
+			}
+			
+		}
+		if(sucesso == false) {		
 		obj.setEmail(request.getParameter("email"));
+		obj.setNome(request.getParameter("nome"));		
 		obj.setSilhouette(request.getParameter("silhouette"));
 		obj.setPromocao(request.getParameter("promocao"));
 		obj.setArqGratuito(request.getParameter("arqGratuitos"));
@@ -42,7 +52,7 @@ public class ServeletEmail extends HttpServlet{
 		PrintWriter saida = response.getWriter();
 		
 		//int cod = Integer.parseInt(request.getParameter("cod"));
-		boolean sucesso = false;
+		sucesso = false;
 		sucesso = obj.inserir();
 	
 		if(sucesso) {
@@ -51,7 +61,7 @@ public class ServeletEmail extends HttpServlet{
 			saida.print("erro ao gravar");
 		}
 		
-		
+		}
 		
 		
 		

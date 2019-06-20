@@ -15,6 +15,8 @@ public class Pessoa {
 	private String arqGratuito;
 	private String achou;
 	private String cursoPago;
+	private String senha;
+	
 	
 	public int getCod() {
 		return cod;
@@ -96,6 +98,20 @@ public class Pessoa {
 
 		}
 
-	
+		
+		public boolean checarEmail(String checarEmail) {
+			// TODO Auto-generated method stub
+			Connection conexao = new ConectarJDBC().getConectar();
+			try {
+				PreparedStatement ps = conexao.prepareStatement("select * from emails where email =?");
+				ps.setString(1,checarEmail );
+				
+				return true;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return false;
+		}
 
 }
