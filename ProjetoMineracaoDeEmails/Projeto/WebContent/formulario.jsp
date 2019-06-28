@@ -185,7 +185,7 @@
 		}
 
 		function gravar() {
-		var aux = checarEmail();
+		//var aux = checarEmail();
 		//alert(aux);
 		if(checarEmail()!=true){
 			//alert("gravar");
@@ -244,7 +244,7 @@
 					//alert("Por favor, informe um E-MAIL válido 828");
 				if(msg == 'true'){
 					//alert("Por favor, informe um E-MAIL válido 888");
-					document.getElementById("alert-email").innerHTML = "Email já cadastrado";
+					document.getElementById("alert-email").innerHTML = 'Email já cadastrado';
 					document.getElementById("alert-email").style.color = "red";
 					return false;
 				} else {
