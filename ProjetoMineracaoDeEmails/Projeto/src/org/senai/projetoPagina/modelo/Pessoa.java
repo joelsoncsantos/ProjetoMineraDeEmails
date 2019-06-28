@@ -2,6 +2,7 @@ package org.senai.projetoPagina.modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Pessoa {
@@ -99,17 +100,27 @@ public class Pessoa {
 		}
 
 		
-		public boolean checarEmail(String checarEmail) {
+		public boolean pesquisarEmail(String checarEmail) {
 			// TODO Auto-generated method stub
 			Connection conexao = new ConectarJDBC().getConectar();
 			try {
-				PreparedStatement ps = conexao.prepareStatement("select * from emails where email =?");
-				ps.setString(1,checarEmail );
 				
-				return true;
+				PreparedStatement ps = conexao.prepareStatement("select * from emails where email =?");
+				ps.setString(1,checarEmail);
+				ResultSet rs = ps.executeQuery();
+				
+				if (rs.next()) {
+					// ja tem um email
+					return true;
+				}else {
+					// email nao encontrado
+					return false;
+				}
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				
 			}
 			return false;
 		}

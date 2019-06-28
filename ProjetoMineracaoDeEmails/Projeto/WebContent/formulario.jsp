@@ -47,40 +47,43 @@
 </head>
 <body>
 
-	<form name="formulario" onSubmit="return ( verifica() )"
-		name="frmEnvia">
-		<div class="form-group col-md-6">
+	<form name="formulario" >
+	<div id="msg"></div>
+		<div class="form-group col-md-6" >
 			<label id="labelNome">Nome:</label><br> <input type="text"
-				class="form-control" id="nome" placeholder="Nome Completo"
-				name="nome">
+				class="form-control"  placeholder="Nome Completo"
+				id="nome" name="nome" onblur="verificarNome();">
+				<div id="alert-nome"></div>
 
 		</div>
-		<div class="form-group col-md-6">
-			<label id="labelEmail" from="email">Email:</label><br> <input
-				type="text" class="form-control" id="email"
-				placeholder="Insira seu e-mail" name="email" onblur="checarEmail();">
+		<div class="form-group col-md-6" >
+		 
+			<label id="labelEmail" from="email" >Email:</label><br> <input
+				type="text" class="form-control" 
+				placeholder="Insira seu e-mail" name="email" onblur="checarEmail();" id="email" >
+				<div id="alert-email"></div>
 				
 		</div>
 		<div class="form-group col-md-3">
 			<div>
-				<label id="labelEmail">Senha:</label><br> <input
+				<label id="labelSenha">Senha:</label><br> <input
 					type="password" class="form-control" id="senha"
 					placeholder="No mínimo 6 digitos" name="senha">
 			</div>
-			<div>
-				<label id="labelEmail">Confirmar senha:</label><br> <input
-					type="password" class="form-control" id="confirmarSenha"
-					placeholder="No mínimo 6 digitos" name="confirmarSenha"
+			<div >
+				<label id="labelSenha">Confirmar senha:</label><br> <input
+					type="password" class="form-control" 
+					placeholder="No mínimo 6 digitos" name="confirmarSenha" id="confirmarSenha"
 					onblur="verificarSenha();">
 			</div>
+			<div id="alert-senha"></div>
 		</div>
 		<div class="form-group col-md-6">
 			<label id="labelComoNosAchou">Como nos achou?</label><br> <select
 				class="form-control form-control" id="achou">
 				<option value="Sigo no Instagram">Sigo no Instagram</option>
 				<option value="Indicação de Amigos">Indicação de Amigos</option>
-				<option value="Pesquisando na internet">Pesquisando na
-					internet</option>
+				<option value="Pesquisando na internet">Pesquisando nainternet</option>
 				<option value="Outros">Outros</option>
 			</select>
 		</div>
@@ -114,7 +117,7 @@
 				</select>
 			</div>
 			<div class="form-group col-md-3">
-				<label id="labelCursosPagos">Tem interessa por cursos pagos?</label><br>
+				<label id="labelCursosPagos">Tem interesse por cursos pagos?</label><br>
 
 				<select class="form-control form-control" id="cursosPagos">
 					<option value="Sim">Sim</option>
@@ -123,21 +126,21 @@
 			</div>
 		</div>
 
-		<tr>
-			<td></td>
+		
+			
 			<td>
 				<button style="background: #DC143C" type="button"
-					class="btn text-white" onclick="novo()">Novo</button>
+					class="btn text-white" onclick="novo();" >Novo</button>
 				<button style="background: #48D1CC" type="button"
-					class="btn text-white" onclick="gravar()"
-					>Gravar</button>
+					class="btn text-white" onclick="gravar();">Gravar</button>
 					
 
 			</td>
-		</tr>
+		
 
 
 	</form>
+
 
 	<!-- JavaScript -->
 
@@ -182,22 +185,30 @@
 		}
 
 		function gravar() {
-			
+		var aux = checarEmail();
+		//alert(aux);
+		if(checarEmail()!=true){
+			//alert("gravar");
 			var xhttp = new XMLHttpRequest();
+			
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
 					// Typical action to be performed when the document is ready:
 					var msg = xhttp.responseText;
 					document.getElementById("msg").innerHTML = msg;
+					
 					if (msg == "Gravado com sucesso") {
 						document.getElementById("msg").className = "alert alert-info";
+						
 					} else {
 						document.getElementById("msg").className = "alert alert-danger";
 					}
 				}
 			};
+			
 			xhttp.open("GET", "serveletEmail?" + dadosForm(), true);
 			xhttp.send();
+		}
 		}
 		
 		function novo() {
@@ -205,60 +216,85 @@
 
 		}
 
-		function verifica() {
-			if (document.forms[0].email.value.length == 0) {
-				alert('Por favor, informe o seu EMAIL.');
-				document.frmEnvia.email.focus();
-				return false;
-			}
-			return true;
-		}
+		
 
 		function checarEmail() {
-
-			if (document.forms[0].email.value == document
-					.getElementById("email").value
+			
+			if (document.forms[0].email.value == 0
 					|| document.forms[0].email.value.indexOf('@') == -1
 					|| document.forms[0].email.value.indexOf('.') == -1) {
-				//alert("Por favor, informe um E-MAIL válido ou seu está cadastrado");
-				//return false;
-			}
-			
+				//alert("Por favor, informe um E-MAIL válido ");
+				document.getElementById("alert-email").innerHTML = "Por favor forneça um email válido";
+				document.getElementById("alert-email").style.color = "red";
+
+				return false;
+				
+			}else{
+				
 			var email = document.getElementById("email").value;
-			var xhttp = new XMLHttpRequest();
+			
+			var xhttp = new XMLHttpRequest(email);
+			
 			xhttp.onreadystatechange = function() {
+				
 				if (this.readyState == 4 && this.status == 200) {
 					// Typical action to be performed when the document is ready:
+						
 					var msg = xhttp.responseText;
-					
-									
+					//alert("Por favor, informe um E-MAIL válido 828");
+				if(msg == 'true'){
+					//alert("Por favor, informe um E-MAIL válido 888");
+					document.getElementById("alert-email").innerHTML = "Email já cadastrado";
+					document.getElementById("alert-email").style.color = "red";
+					return false;
+				} else {
+					//alert("Por favor, informe um E-MAIL válido 9999999");
+						document.getElementById("alert-email").innertHTML = "";
+						return true;
+					}
 				
+								
 				}
 			};
 			xhttp.open("GET", "serveletEmail?checarEmail="+email , true);
 			xhttp.send();
 			
 			
-
-		}
-
-		function validaSenha(input) {
-			if (input.value != document.getElementById("senha").value) {
-				input.setCustomValidity("As senhas não coecidem!");
-			} else {
-				input.setCustomValidity("");
 			}
 		}
+
+	
 
 		function verificarSenha() {
 
 			if (document.getElementById("senha").value != document
 					.getElementById("confirmarSenha").value) {
-				alert("Senha não confere");
+				document.getElementById("alert-senha").className = "alert alert-danger";
+				document.getElementById("alert-senha").innerHTML = "Senha não Confere";
 				return false;
+			}else{
+				document.getElementById("alert-senha").innertHTML = "";
+				return true;
 			}
 
 		}
+		function verificarNome(){
+			var nome2 = document.getElementById("nome").value;
+			
+			if(nome2.length < 3 ){
+				document.getElementById("alert-nome").innerHTML = "Insira o nome correto ";
+				 document.getElementById("alert-nome").style.color = "red";
+				return false;
+			}else{
+				document.getElementById("alert-nome").innerHTML = "";
+				 
+				return true;
+			}
+			}
+			
+			
+		
+		
 	</script>
 </body>
 </html>
