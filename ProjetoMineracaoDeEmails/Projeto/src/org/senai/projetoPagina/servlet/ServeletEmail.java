@@ -34,70 +34,12 @@ public class ServeletEmail extends HttpServlet{
 			if(sucesso) {
 				//System.out.println("Email j� cadastrado");
 				saida.print("true");
-				
-			} else	{
-				obj.setEmail(request.getParameter("email"));
-				obj.setNome(request.getParameter("nome"));		
-				obj.setSilhouette(request.getParameter("silhouette"));
-				obj.setPromocao(request.getParameter("promocao"));
-				obj.setArqGratuito(request.getParameter("arqGratuitos"));
-				obj.setAchou(request.getParameter("achou"));
-				obj.setCursoPago(request.getParameter("cursosPagos"));
-				
-				
-				//System.out.println("Nome digitado: "+obj.getNome()+ " email "+ obj.getEmail()+
-					//	" achou "+ obj.getAchou()+ " silhouette "+ obj.getSilhouette()+" gratuito "
-						//+obj.getArqGratuito()+ " pago"+obj.getCursoPago());
-				
-				
-				
-				
-				
-				//int cod = Integer.parseInt(request.getParameter("cod"));
-				sucesso = false;
-				sucesso = obj.inserir();
-			
-				if(sucesso) {
-					saida.print("Gravado com sucesso");
-				}else {
-					saida.print("Erro ao gravar");
-				}
-				
+						
 			}
 			
 		}
 			
-		/*
-		obj.setEmail(request.getParameter("email"));
-		obj.setNome(request.getParameter("nome"));		
-		obj.setSilhouette(request.getParameter("silhouette"));
-		obj.setPromocao(request.getParameter("promocao"));
-		obj.setArqGratuito(request.getParameter("arqGratuitos"));
-		obj.setAchou(request.getParameter("achou"));
-		obj.setCursoPago(request.getParameter("cursosPagos"));
-		
-		
-		//System.out.println("Nome digitado: "+obj.getNome()+ " email "+ obj.getEmail()+
-			//	" achou "+ obj.getAchou()+ " silhouette "+ obj.getSilhouette()+" gratuito "
-				//+obj.getArqGratuito()+ " pago"+obj.getCursoPago());
-		
-		
-		
-		
-		
-		//int cod = Integer.parseInt(request.getParameter("cod"));
-		sucesso = false;
-		sucesso = obj.inserir();
-	
-		if(sucesso) {
-			saida.print("Gravado com sucesso<br>");
-		}else {
-			saida.print("erro ao gravar<br>");
-		}
-		
-		*/
-		
-		
+			
 		
 	}
 

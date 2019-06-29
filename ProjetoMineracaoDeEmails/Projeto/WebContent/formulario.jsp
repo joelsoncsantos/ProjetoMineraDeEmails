@@ -48,7 +48,7 @@
 <body>
 
 	<form name="formulario" >
-	<div id="msg"></div>
+	
 		<div class="form-group col-md-6" >
 			<label id="labelNome">Nome:</label><br> <input type="text"
 				class="form-control"  placeholder="Nome Completo"
@@ -58,10 +58,10 @@
 		</div>
 		<div class="form-group col-md-6" >
 		 
-			<label id="labelEmail" from="email" >Email:</label><br> <input
+			<label id="labelEmail" >Email:</label><br> <input
 				type="text" class="form-control" 
 				placeholder="Insira seu e-mail" name="email" onblur="checarEmail();" id="email" >
-				<div id="alert-email"></div>
+				<div id="alert-email" name="alert-email"></div>
 				
 		</div>
 		<div class="form-group col-md-3">
@@ -129,10 +129,12 @@
 		
 			
 			<td>
+			<div id="msg"></div>
 				<button style="background: #DC143C" type="button"
 					class="btn text-white" onclick="novo();" >Novo</button>
 				<button style="background: #48D1CC" type="button"
 					class="btn text-white" onclick="gravar();">Gravar</button>
+					
 					
 
 			</td>
@@ -179,16 +181,16 @@
 					+ document.getElementById("arqGratuitos").value;
 			dados += "&cursosPagos="
 					+ document.getElementById("cursosPagos").value;
-			//dados += "&cod="+document.getElementById("cod").value;
-
+			dados += "&senha=" + document.getElementById("senha").value;
+			
 			return dados;
 		}
 
 		function gravar() {
-		//var aux = checarEmail();
+			var email = document.getElementById("alert-email").value;
 		//alert(aux);
-		if(checarEmail()!=true){
-			//alert("gravar");
+		if(checarEmail()!= false){
+			//alert(checarEmail());
 			var xhttp = new XMLHttpRequest();
 			
 			xhttp.onreadystatechange = function() {
@@ -196,19 +198,23 @@
 					// Typical action to be performed when the document is ready:
 					var msg = xhttp.responseText;
 					document.getElementById("msg").innerHTML = msg;
-					
-					if (msg == "Gravado com sucesso") {
-						document.getElementById("msg").className = "alert alert-info";
+					//var msg = xhttp.responseText;
+					if (msg == 'true') {
+						document.getElementById("msg").innerHTML= "Gravado com sucesso";
+						document.getElementById("msg").style.color = "White";
+						document.getElementById("msg").style.background = "Blue";
 						
 					} else {
-						document.getElementById("msg").className = "alert alert-danger";
+						document.getElementById("msg").innerHTML = "Erro ao gravar";
+						document.getElementById("msg").style.background = "red";
 					}
 				}
 			};
 			
-			xhttp.open("GET", "serveletEmail?" + dadosForm(), true);
+			xhttp.open("GET", "serveletGravar?" + dadosForm(), true);
 			xhttp.send();
 		}
+		return false;
 		}
 		
 		function novo() {
@@ -220,12 +226,10 @@
 
 		function checarEmail() {
 			
-			if (document.forms[0].email.value == 0
-					|| document.forms[0].email.value.indexOf('@') == -1
-					|| document.forms[0].email.value.indexOf('.') == -1) {
+			if ( document.forms[0].email.value.indexOf('@') == -1 || document.forms[0].email.value.indexOf('.') == -1) {
 				//alert("Por favor, informe um E-MAIL válido ");
 				document.getElementById("alert-email").innerHTML = "Por favor forneça um email válido";
-				document.getElementById("alert-email").style.color = "red";
+				document.getElementById("alert-email").style.background = "red";
 
 				return false;
 				
@@ -233,7 +237,7 @@
 				
 			var email = document.getElementById("email").value;
 			
-			var xhttp = new XMLHttpRequest(email);
+			var xhttp = new XMLHttpRequest();
 			
 			xhttp.onreadystatechange = function() {
 				
@@ -242,21 +246,21 @@
 						
 					var msg = xhttp.responseText;
 					//alert("Por favor, informe um E-MAIL válido 828");
-				if(msg == 'true'){
+				if(msg == "true"){
 					//alert("Por favor, informe um E-MAIL válido 888");
 					document.getElementById("alert-email").innerHTML = 'Email já cadastrado';
 					document.getElementById("alert-email").style.color = "red";
 					return false;
 				} else {
 					//alert("Por favor, informe um E-MAIL válido 9999999");
-						document.getElementById("alert-email").innertHTML = "";
+						//document.getElementById("alert-email").innertHTML = "";
 						return true;
 					}
 				
 								
 				}
 			};
-			xhttp.open("GET", "serveletEmail?checarEmail="+email , true);
+			xhttp.open("GET", "serveletEmail?"+dadosForm()+"&pesquisarEmail" , true);
 			xhttp.send();
 			
 			
@@ -292,7 +296,29 @@
 			}
 			}
 			
+		function apagar(){
+			if(confirm("Realmente deseja apagar seu registro?")){
 			
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					// Typical action to be performed when the document is ready:
+					var msg = xhttp.responseText;
+					
+					if (msg == "Gravado com sucesso") {
+						document.getElementById("msg").className = "alert alert-info";
+						document.getElementById("msg").innerHTML = "Informação apagada";
+						document.getElementById("formulario").reset();
+					} else {
+						document.getElementById("msg").className = "alert alert-danger";
+						document.getElementById("msg").innerHTML = "Erro ao apagar";
+					}
+				}
+			};
+			xhttp.open("GET", "serveletEmail?" + dadosForm()+"&apagar", true);
+			xhttp.send();
+		}
+		}
 		
 		
 	</script>

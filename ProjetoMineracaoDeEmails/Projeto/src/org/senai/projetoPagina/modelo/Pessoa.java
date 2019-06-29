@@ -5,10 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.senai.projetoPagina.modelo.ConectarJDBC;
+
 public class Pessoa {
 	private int cod;
-	
-
 	private String nome;
 	private String email;
 	private String silhouette;
@@ -67,14 +67,19 @@ public class Pessoa {
 	public void setArqGratuito(String arqGratuito) {
 		this.arqGratuito = arqGratuito;
 	}
-	
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 	// método inserir
 		public boolean inserir() {
 			Connection conexao = new ConectarJDBC().getConectar();
 			if (conexao != null) {
 				String sql = "insert into emails(" + "nome_completo  ," + "email         ," + "achou          ,"
-						+ "silhouette   ," + "promocao    ," + "arq_gratuito    ," + "arq_pago " + ") "
-						+ "values (?," + "?," + "?," + "?," + "?," + "?," + "?" + ")";
+						+ "silhouette   ," + "promocao    ," + "arq_gratuito    ," + "arq_pago ," + "senha  " + ") "
+						+ "values (?," + "?," + "?," + "?," + "?," + "?," + "?," + "?" + ")";
 				try {
 					PreparedStatement prepararSQL = conexao.prepareStatement(sql);
 
@@ -85,6 +90,7 @@ public class Pessoa {
 					prepararSQL.setString(5, promocao);
 					prepararSQL.setString(6, arqGratuito);
 					prepararSQL.setString(7, cursoPago);
+					prepararSQL.setString(8, senha);
 
 					prepararSQL.execute();
 					prepararSQL.close();
@@ -100,6 +106,7 @@ public class Pessoa {
 		}
 
 		
+		//metodo pesquisar por email
 		public boolean pesquisarEmail(String checarEmail) {
 			// TODO Auto-generated method stub
 			Connection conexao = new ConectarJDBC().getConectar();
@@ -124,5 +131,68 @@ public class Pessoa {
 			}
 			return false;
 		}
+		
+		//metodo apagar
+		public boolean apagar() {
+			Connection conexao = new ConectarJDBC().getConectar();
+			if (conexao != null) {
+				String sql = "delete from emails where email = ? ";
+				try {
+					PreparedStatement prepararSQL = conexao.prepareStatement(sql);
+
+					prepararSQL.setString(1, email);
+
+					prepararSQL.execute();
+					prepararSQL.close();
+					return true;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				}
+			}
+			
+			return false;
+		}
+
+		//método alterar
+		public boolean atualizar() {
+			Connection conexao = new ConectarJDBC().getConectar();
+			if (conexao != null) {
+				String sql = "update emails set" + 
+						" nome_completo=?   ,"+ 
+						" email=?          ,"+ 
+						" achou=?           ,"+
+						" silhouete=?    ,"+
+						" promocao=?     ,"+ 
+						" arq_gratuito=?     ,"+ 
+						" arq_pago=?   ,"+
+						" senha=?   "+
+						 "where email=?";
+				try {
+					PreparedStatement prepararSQL = conexao.prepareStatement(sql);
+
+					prepararSQL.setString(1, nome);
+					prepararSQL.setString(2, email);
+					prepararSQL.setString(3, achou);
+					prepararSQL.setString(4, silhouette);
+					prepararSQL.setString(5, promocao);
+					prepararSQL.setString(6, arqGratuito);
+					prepararSQL.setString(7, cursoPago);
+					prepararSQL.setString(8, senha);
+					
+					prepararSQL.execute();
+					prepararSQL.close();
+					return true;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				}
+			}
+			
+			return false;
+		}
+
 
 }
